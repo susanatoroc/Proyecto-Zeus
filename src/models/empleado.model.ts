@@ -1,5 +1,6 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
 import { Persona } from './persona.model';
+import {Empresa} from './empresa.model';
 
 @model({settings: {strict: false}})
 export class Empleado extends Persona {
@@ -16,6 +17,13 @@ export class Empleado extends Persona {
   })
   Sueldo_bruto: number;
 
+  @property({
+    type: 'string',
+  })
+  directivoId?: string;
+
+  @belongsTo(() => Empresa)
+  empresaId: string;
   // Define well-known properties here
 
   // Indexer property to allow additional data

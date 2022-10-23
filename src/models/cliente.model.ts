@@ -1,5 +1,5 @@
 import {model, property} from '@loopback/repository';
-import {Persona} from '.';
+import {Persona} from './persona.model';
 
 @model({settings: {strict: false}})
 export class Cliente extends Persona {

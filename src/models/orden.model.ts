@@ -1,7 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-export class Producto extends Entity {
+export class Orden extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -25,21 +25,30 @@ export class Producto extends Entity {
     type: 'string',
     required: true,
   })
-  descripcion: string;
+  Descripcion: string;
 
+  @property({
+    type: 'string',
+  })
+  empresaId?: string;
+
+  @property({
+    type: 'string',
+  })
+  clienteId?: string;
   // Define well-known properties here
 
   // Indexer property to allow additional data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Producto>) {
+  constructor(data?: Partial<Orden>) {
     super(data);
   }
 }
 
-export interface ProductoRelations {
+export interface OrdenRelations {
   // describe navigational properties here
 }
 
-export type ProductoWithRelations = Producto & ProductoRelations;
+export type OrdenWithRelations = Orden & OrdenRelations;

@@ -1,5 +1,5 @@
-import {model, property} from '@loopback/repository';
-import {Empleado} from '.';
+import {hasMany, model, property} from '@loopback/repository';
+import {Empleado} from './empleado.model';
 
 @model({settings: {strict: false}})
 export class Directivo extends Empleado {
@@ -16,6 +16,8 @@ export class Directivo extends Empleado {
   })
   Categoria: number;
 
+  @hasMany(() => Empleado)
+  empleados: Empleado[];
   // Define well-known properties here
 
   // Indexer property to allow additional data
