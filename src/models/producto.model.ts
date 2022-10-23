@@ -1,8 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
-import { Persona } from './persona.model';
 
 @model({settings: {strict: false}})
-export class Empleado extends Persona {
+export class Producto extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -11,10 +10,22 @@ export class Empleado extends Persona {
   id?: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  Nombre: string;
+
+  @property({
     type: 'number',
     required: true,
   })
-  Sueldo_bruto: number;
+  Valor: number;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  descripcion: string;
 
   // Define well-known properties here
 
@@ -22,13 +33,13 @@ export class Empleado extends Persona {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Empleado>) {
+  constructor(data?: Partial<Producto>) {
     super(data);
   }
 }
 
-export interface EmpleadoRelations {
+export interface ProductoRelations {
   // describe navigational properties here
 }
 
-export type EmpleadoWithRelations = Empleado & EmpleadoRelations;
+export type ProductoWithRelations = Producto & ProductoRelations;
