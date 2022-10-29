@@ -4,3 +4,4 @@ export * from './empleado.repository';
 export * from './empresa.repository';
 export * from './orden.repository';
 export * from './persona.repository';
+export * from './notificaciones.repository';

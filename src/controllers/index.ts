@@ -7,3 +7,4 @@ export * from './controlador-cliente.controller';
 export * from './controlador-directivo.controller';
 export * from './controlador-empleado.controller';
 export * from './controlador-orden.controller';
+export * from './notificaciones.controller';
