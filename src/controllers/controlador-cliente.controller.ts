@@ -12,9 +12,13 @@ import {
   getModelSchemaRef, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
+import {
+  AutenticacionService,
+  NotificacionesService
+} from '../services';
+
 import {Cliente} from '../models';
 import {ClienteRepository} from '../repositories';
-import {AutenticacionService} from '../services';
 
 export class ControladorClienteController {
   constructor(
@@ -22,6 +26,8 @@ export class ControladorClienteController {
     public clienteRepository: ClienteRepository,
     @service(AutenticacionService)
     public autenticacionService: AutenticacionService,
+    @service(NotificacionesService)
+    public notificacionesService: NotificacionesService,
   ) { }
 
   @post('/clientes')
@@ -45,6 +51,7 @@ export class ControladorClienteController {
     let passwordGenerate = this.autenticacionService.generarClaveAleatorio();
     console.log("La clave generada es " + passwordGenerate);
     this.notificacionesService.enviarSMS(passwordGenerate, cliente.telefono);
+    this.notificacionesService.enviarCorreo(passwordGenerate, "susana.toro.contreras@gmail.com");
     let claveCifrada = this.autenticacionService.cifrarClave(passwordGenerate);
     cliente.clave = claveCifrada;
     return this.clienteRepository.create(cliente);
