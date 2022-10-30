@@ -16,6 +16,12 @@ export class Cliente extends Persona {
   })
   telefono: string;
 
+  @property({
+    type: 'string',
+    required: false,
+  })
+  clave: string;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

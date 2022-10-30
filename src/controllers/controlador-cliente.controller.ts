@@ -1,30 +1,28 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Cliente} from '../models';
 import {ClienteRepository} from '../repositories';
+import {AutenticacionService} from '../services';
 
 export class ControladorClienteController {
   constructor(
     @repository(ClienteRepository)
-    public clienteRepository : ClienteRepository,
-  ) {}
+    public clienteRepository: ClienteRepository,
+    @service(AutenticacionService)
+    public autenticacionService: AutenticacionService,
+  ) { }
 
   @post('/clientes')
   @response(200, {
@@ -44,6 +42,11 @@ export class ControladorClienteController {
     })
     cliente: Omit<Cliente, 'id'>,
   ): Promise<Cliente> {
+    let passwordGenerate = this.autenticacionService.generarClaveAleatorio();
+    console.log("La clave generada es " + passwordGenerate);
+    this.notificacionesService.enviarSMS(passwordGenerate, cliente.telefono);
+    let claveCifrada = this.autenticacionService.cifrarClave(passwordGenerate);
+    cliente.clave = claveCifrada;
     return this.clienteRepository.create(cliente);
   }
 
