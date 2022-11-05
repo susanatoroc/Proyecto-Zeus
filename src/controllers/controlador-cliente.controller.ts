@@ -9,7 +9,7 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param, patch, post, put, requestBody,
+  getModelSchemaRef, HttpErrors, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
 import {
@@ -17,7 +17,7 @@ import {
   NotificacionesService
 } from '../services';
 
-import {Cliente} from '../models';
+import {Cliente, Credenciales} from '../models';
 import {ClienteRepository} from '../repositories';
 
 export class ControladorClienteController {
@@ -56,6 +56,37 @@ export class ControladorClienteController {
     cliente.clave = claveCifrada;
     return this.clienteRepository.create(cliente);
   }
+
+  @post('/clientes/identificarCliente')
+  @response(200, {
+    description: 'Identificacion de cliente'
+  })
+  async identificarCliente(
+    @requestBody()
+    credenciales: Credenciales
+  ) {
+    let p = await this.autenticacionService.identificarPersona(credenciales.usuario, credenciales.clave);
+
+    if (p) {
+      let token = this.autenticacionService.GenerarTokenJWT(p);
+      return {
+        datos: {
+          nombre: p.Nombre,
+          username: p.username,
+          id: p.id
+        },
+
+        tk: token
+
+      }
+    }
+    else {
+
+      throw new HttpErrors[401]("Datos invalidos");
+
+    }
+  }
+
 
   @get('/clientes/count')
   @response(200, {

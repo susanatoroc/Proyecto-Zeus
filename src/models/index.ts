@@ -5,3 +5,4 @@ export * from './empresa.model';
 export * from './persona.model';
 export * from './orden.model';
 export * from './notificaciones.model';
+export * from './credenciales.model';
