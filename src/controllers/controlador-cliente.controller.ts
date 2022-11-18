@@ -50,8 +50,8 @@ export class ControladorClienteController {
   ): Promise<Cliente> {
     let passwordGenerate = this.autenticacionService.generarClaveAleatorio();
     console.log("La clave generada es " + passwordGenerate);
-    this.notificacionesService.enviarSMS(passwordGenerate, cliente.telefono);
-    this.notificacionesService.enviarCorreo(passwordGenerate, "susana.toro.contreras@gmail.com");
+    //this.notificacionesService.enviarSMS(passwordGenerate, cliente.telefono);
+    //this.notificacionesService.enviarCorreo(passwordGenerate, "susana.toro.contreras@gmail.com");
     let claveCifrada = this.autenticacionService.cifrarClave(passwordGenerate);
     cliente.clave = claveCifrada;
     return this.clienteRepository.create(cliente);
@@ -65,6 +65,7 @@ export class ControladorClienteController {
     @requestBody()
     credenciales: Credenciales
   ) {
+    console.log("Entroooo!")
     let p = await this.autenticacionService.identificarPersona(credenciales.usuario, credenciales.clave);
 
     if (p) {

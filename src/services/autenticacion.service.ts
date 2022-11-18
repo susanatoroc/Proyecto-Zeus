@@ -20,6 +20,7 @@ export class AutenticacionService {
   generarClaveAleatorio = (): string => {
 
     let claveGenerada = generatePassword(12, false); //Genero Clave de 12 caracteres
+    console.log(claveGenerada);
     return claveGenerada;
   };
 
