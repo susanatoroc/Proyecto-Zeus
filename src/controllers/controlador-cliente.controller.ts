@@ -17,6 +17,7 @@ import {
   NotificacionesService
 } from '../services';
 
+import {authenticate} from '@loopback/authentication';
 import {Cliente, Credenciales} from '../models';
 import {ClienteRepository} from '../repositories';
 
@@ -137,6 +138,7 @@ export class ControladorClienteController {
     return this.clienteRepository.updateAll(cliente, where);
   }
 
+  @authenticate("admin")
   @get('/clientes/{id}')
   @response(200, {
     description: 'Cliente model instance',
